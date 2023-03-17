@@ -46,4 +46,9 @@ public class TestController {
   public NominatimPlace status() {
     return nominatimClient.search("кубгу", "json").get(0);
   }
+  @GetMapping(value = "/reversestatus", produces = APPLICATION_JSON_VALUE)
+  public NominatimPlace reverse() {
+    return nominatimClient.reverse("45.038049", "45.038049","json");
+  }
+
 }
