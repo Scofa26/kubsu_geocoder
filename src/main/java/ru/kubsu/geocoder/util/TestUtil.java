@@ -1,8 +1,13 @@
 package ru.kubsu.geocoder.util;
+//@SuppressWarnings("WhiteSpace..")
 
-public class TestUtil {
+/**
+ * @author chidasophia
+ */
+@SuppressWarnings("WhitespaceAround")
+public enum TestUtil {;
 
-    public static int sum(int a, int b){
+    public static int sum(int a, int b) {
         return a + b;
     }
 }

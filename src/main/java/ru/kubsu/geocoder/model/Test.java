@@ -5,6 +5,9 @@ package ru.kubsu.geocoder.model;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ *
+ */
 @Entity
 
 public class Test {
@@ -51,10 +54,17 @@ public class Test {
     }
 
     @Override
+    @SuppressWarnings("Indentation")
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Test test = (Test) o;
+      if (this == o) {
+          return true;
+
+        }
+      if (o == null || getClass() != o.getClass()) {
+          return false;
+
+        }
+       final Test test = (Test) o;
         return Objects.equals(id, test.id)
                 && Objects.equals(name, test.name)
                 && Objects.equals(done, test.done)
@@ -68,11 +78,17 @@ public class Test {
 
     @Override
     public String toString() {
-        return "Test{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", done=" + done +
-                ", mark=" + mark +
+        return "Test{"
+            +
+                "id=" + id
+            +
+                ", name='" + name
+            + '\''
+            +
+                ", done=" + done
+            +
+                ", mark=" + mark
+            +
                 '}';
     }
 }

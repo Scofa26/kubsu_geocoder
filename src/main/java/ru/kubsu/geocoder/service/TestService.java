@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import ru.kubsu.geocoder.model.Test;
 import ru.kubsu.geocoder.repository.TestRepository;
 
+/**
+ *
+ */
 @Service
 public class TestService {
 
@@ -16,14 +19,14 @@ public class TestService {
     }
 
     public Test build(Integer id, String name) {
-        Test test = new Test();
+        final Test test = new Test();
         test.setId(id);
         test.setName(name);
         return test;
     }
 
     public void save(String name) {
-        Test test = new Test();
+        final Test test = new Test();
         test.setName(name);
         repository.save(test);
     }

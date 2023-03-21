@@ -92,9 +92,9 @@ class TestControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
         final RestApiError body = response.getBody();
-        assertEquals(400, body.getStatus());
-        assertEquals("Bad Request", body.getError());
-        assertEquals("/tests/abc", body.getPath());
+        assertEquals(400, body.status());
+        assertEquals("Bad Request", body.error());
+        assertEquals("/tests/abc", body.path());
 
         //assertEquals("{\"id\":1,\"name\":\"test\",\"done\":null,\"mark\":null}", body);
         //System.out.println(response.getBody());
@@ -150,9 +150,9 @@ class TestControllerTest {
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
     final RestApiError body = response.getBody();
-    assertEquals(400, body.getStatus());
-    assertEquals("Bad Request", body.getError());
-    assertEquals("/tests/load", body.getPath());
+    assertEquals(400, body.status());
+    assertEquals("Bad Request", body.error());
+    assertEquals("/tests/load", body.path());
 
     //assertEquals("{\"id\":1,\"name\":\"test\",\"done\":null,\"mark\":null}", body);
     //System.out.println(response.getBody());
