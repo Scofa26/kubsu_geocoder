@@ -22,13 +22,13 @@ public class GeocoderController {
     private final NominatimClient nominatimClient;
     @Autowired
 
-       public GeocoderController(NominatimClient nominatimClient) {
+       public GeocoderController(final NominatimClient nominatimClient) {
         this.nominatimClient = nominatimClient;
     }
 
 
     @GetMapping(value = "/status", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<NominatimPlace> status(@RequestParam String address) {
+    public ResponseEntity<NominatimPlace> status(@RequestParam final String address) {
         return nominatimClient.search(address).map(nominatimPlace -> ResponseEntity
      .status(HttpStatus.OK)
      .body(nominatimPlace)).orElseGet(() -> ResponseEntity

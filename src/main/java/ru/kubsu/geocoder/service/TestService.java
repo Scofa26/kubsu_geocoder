@@ -9,29 +9,30 @@ import ru.kubsu.geocoder.repository.TestRepository;
  *
  */
 @Service
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public class TestService {
-
+    @SuppressWarnings({"PMD.ImmutableField", "Indentation"})
     private TestRepository repository;
 
     @Autowired
-    public TestService(TestRepository repository) {
+    public TestService(final TestRepository repository) {
         this.repository = repository;
     }
 
-    public Test build(Integer id, String name) {
+    public Test build(final Integer id, final String name) {
         final Test test = new Test();
         test.setId(id);
         test.setName(name);
         return test;
     }
 
-    public void save(String name) {
+    public void save(final String name) {
         final Test test = new Test();
         test.setName(name);
         repository.save(test);
     }
 
-    public Test load(String name) {
+    public Test load(final String name) {
         return repository.findByName(name)
                 .orElse(null);
     }

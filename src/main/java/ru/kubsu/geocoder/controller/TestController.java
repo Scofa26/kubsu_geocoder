@@ -12,27 +12,28 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  */
 @RestController
 @RequestMapping("tests")
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public class TestController {
 
     private final TestService service;
 
     @Autowired
-  public TestController(TestService service) {
+  public TestController(final TestService service) {
         this.service = service;
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-  public Test getTest(@PathVariable Integer id, @RequestParam String name) {
+  public Test getTest(@PathVariable final Integer id, @RequestParam final String name) {
         return service.build(id, name);
     }
 
     @GetMapping(value = "/save", produces = APPLICATION_JSON_VALUE)
-    public void save(@RequestParam String name) {
+    public void save(@RequestParam final String name) {
         service.save(name);
     }
 
     @GetMapping(value = "/load/{name}", produces = APPLICATION_JSON_VALUE)
-    public Test load(@PathVariable String name) {
+    public Test load(@PathVariable final String name) {
         return service.load(name);
     }
 

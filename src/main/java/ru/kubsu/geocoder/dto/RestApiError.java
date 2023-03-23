@@ -17,4 +17,4 @@ public record RestApiError(
     public RestApiError() {
         this(0, "00", "0");
     }
-  }
+}
