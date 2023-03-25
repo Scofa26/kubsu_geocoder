@@ -1,5 +1,7 @@
 package ru.kubsu.geocoder.controller;
 
+import org.h2.util.AbbaDetector;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -13,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.kubsu.geocoder.client.NominatimClient;
 import ru.kubsu.geocoder.dto.NominatimPlace;
+import ru.kubsu.geocoder.model.Address;
+import ru.kubsu.geocoder.repository.AddressRepository;
 import ru.kubsu.geocoder.repository.TestRepository;
 
 import java.util.Optional;
@@ -27,18 +31,27 @@ class GeocoderControllerTest {
 
   @MockBean
   private  NominatimClient nominatimClient;
+
+  @Autowired
+  private AddressRepository addressRepository;
   @LocalServerPort
   Integer port;
   private final TestRestTemplate testRestTemplate = new TestRestTemplate();
   @Autowired
   TestRepository testRepository ;
+
+  @BeforeEach
+  void setUp() {
+    addressRepository.deleteAll();
+  }
+
   @Test
-  void searchWhenNominatimNotresponse() {
+  void searchWhenNominatimNotResponse() {
  when (nominatimClient.search(anyString())).thenReturn(Optional.empty());
 
-    ResponseEntity<NominatimPlace> response = testRestTemplate.
+    ResponseEntity<Address> response = testRestTemplate.
       getForEntity("http://localhost:" + port + "/geocoder/status?address=кубгу",
-        NominatimPlace.class);
+        Address.class);
 
 
     assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
@@ -49,18 +62,20 @@ class GeocoderControllerTest {
   }
   @Test
   void search() {
-    final  NominatimPlace testPlace = buildTestPlace();
-    when (nominatimClient.search(anyString())).thenReturn(Optional.of(testPlace));
+    final  Address testAddress = buildTestAddress();
+    when (nominatimClient.search(anyString()))
+      .thenReturn(Optional.of(buildTestPlace()));
 
-    ResponseEntity<NominatimPlace> response = testRestTemplate.
-      getForEntity("http://localhost:" + port + "/geocoder/status?address=кубгу",
-        NominatimPlace.class);
+    ResponseEntity<Address> response = testRestTemplate.
+      getForEntity(
+        "http://localhost:" + port + "/geocoder/status?address=кубгу",
+        Address.class);
 
     assertEquals(HttpStatus.OK,response.getStatusCode());
 
-    final NominatimPlace body = response.getBody();
+    final Address body = response.getBody();
 
-    assertEquals(testPlace, body);
+    assertEquals(testAddress, body);
 
 
     //assertEquals("{\"id\":1,\"name\":\"test\",\"done\":null,\"mark\":null}", body);
@@ -72,4 +87,9 @@ class GeocoderControllerTest {
     // TODO : указать корректные данные? которые реально должны вернуться
     return new NominatimPlace(45.02036085,39.9292392390293029302,"кубгу","universty");
   }
+
+  private static Address buildTestAddress(){
+    return Address.of(buildTestPlace());
+  }
+
 }
