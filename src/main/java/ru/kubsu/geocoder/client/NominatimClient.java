@@ -24,11 +24,6 @@ public interface NominatimClient {
     List<NominatimPlace> search(@RequestParam("q") String query,
                                 @RequestParam("format") String format);
 
-
-    @RequestMapping(method = RequestMethod.GET, value = "/reverse", produces = "application/json")
-    NominatimPlace reverse(@RequestParam("lat") String lat,
-                           @RequestParam("lon") String lon,
-                           @RequestParam("format") String format);
     @SuppressWarnings({"JavadocStyle", "OverloadMethodsDeclarationOrder", "InvalidJavadocPosition", "CommentsIndentation", "LineLength"})
 
   /**
@@ -45,6 +40,25 @@ public interface NominatimClient {
 
         }
     }
+    @RequestMapping(method = RequestMethod.GET, value = "/reverse", produces = "application/json")
+    NominatimPlace reverse(@RequestParam("lat") Double lat,
+                           @RequestParam("lon") Double lon,
+                           @RequestParam("format") String format);
 
+    @SuppressWarnings({"JavadocStyle", "NonEmptyAtclauseDescription", "InvalidJavadocPosition"})
+    /**
+   * Поиск обьекта на карте по lat lon
+   * @param lat
+   * @param lon
+   * @return
+   */
+        default Optional<NominatimPlace> reverse(final Double lat, final Double lon) {
+        try {
+            return Optional.of(reverse(lat, lon, JSON_FORMAT));
+        } catch (Exception ex) {
+            return Optional.empty();
+
+        }
+    }
 
 }

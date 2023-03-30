@@ -32,6 +32,13 @@ public class AddressService {
 
     }
 
+    public Optional<Address> reverse(final Double lat, final Double lon) {
+        final String query = lat.toString() + "&" + lon.toString();
+        return addressRepository.findByQuery(query)
+      .or(() -> nominatimClient.reverse(lat, lon)
+        .map(p -> addressRepository.save(Address.of(p, query))));
+
+    }
 
 
 }

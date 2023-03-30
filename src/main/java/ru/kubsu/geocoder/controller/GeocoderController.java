@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kubsu.geocoder.client.NominatimClient;
-import ru.kubsu.geocoder.dto.NominatimPlace;
 import ru.kubsu.geocoder.model.Address;
 import ru.kubsu.geocoder.service.AddressService;
 
@@ -20,7 +19,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  */
 @RestController
 @RequestMapping("geocoder")
-@SuppressWarnings("Indentation")
+@SuppressWarnings({"Indentation", "PMD.SingularField"})
 public class GeocoderController {
     private final AddressService addressService;
     private final NominatimClient nominatimClient;
@@ -43,11 +42,17 @@ public class GeocoderController {
 
     }
 
-     @GetMapping(value = "/reversestatus", produces = APPLICATION_JSON_VALUE)
-     public NominatimPlace reverse() {
-        return nominatimClient.reverse("45.038049", "45.03804913", "json");
-    }
 
+  @GetMapping(value = "/reverse", produces = APPLICATION_JSON_VALUE)
+  public ResponseEntity<Address> reverse(@RequestParam final Double lat, @RequestParam final Double lon) {
+    return addressService.reverse(lat, lon)
+      .map(nominatimPlace -> ResponseEntity
+        .status(HttpStatus.OK)
+        .body(nominatimPlace)).orElseGet(() -> ResponseEntity
+        .status(HttpStatus.NOT_FOUND)
+        .build());
+
+  }
 
 }
 

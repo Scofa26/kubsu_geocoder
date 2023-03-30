@@ -14,5 +14,7 @@ public interface AddressRepository extends CrudRepository<Address, Integer> {
 
     Optional<Address> findByAddress(String address);
     Optional<Address> findByQuery(String query);
+    Optional<Address> findByLatitudeAndLongitude(Double lat, Double lon);
+
 
 }
