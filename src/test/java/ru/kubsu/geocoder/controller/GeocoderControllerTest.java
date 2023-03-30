@@ -52,7 +52,7 @@ class GeocoderControllerTest {
     when (nominatimClient.search(anyString())).thenReturn(Optional.empty());
 
     ResponseEntity<Address> response = testRestTemplate.
-      getForEntity("http://localhost:" + port + "/geocoder/status?query=" + query,
+      getForEntity("http://localhost:" + port + "/geocoder/search?query=" + query,
         Address.class);
 
 
@@ -71,7 +71,7 @@ class GeocoderControllerTest {
 
     ResponseEntity<Address> response = testRestTemplate.
       getForEntity(
-        "http://localhost:" + port + "/geocoder/status?query=" + query,
+        "http://localhost:" + port + "/geocoder/search?query=" + query,
         Address.class);
 
     assertEquals(HttpStatus.OK,response.getStatusCode());

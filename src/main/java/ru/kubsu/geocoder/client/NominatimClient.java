@@ -44,7 +44,7 @@ public interface NominatimClient {
             return Optional.empty();
 
         }
-
     }
+
 
 }

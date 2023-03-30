@@ -43,10 +43,11 @@ public class GeocoderController {
 
     }
 
-    @GetMapping(value = "/reversestatus", produces = APPLICATION_JSON_VALUE)
-  public NominatimPlace reverse() {
+     @GetMapping(value = "/reversestatus", produces = APPLICATION_JSON_VALUE)
+     public NominatimPlace reverse() {
         return nominatimClient.reverse("45.038049", "45.03804913", "json");
     }
+
 
 }
 
