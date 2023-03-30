@@ -20,6 +20,7 @@ public class Address {
   private String address;
   private Double latitude;
   private Double longitude;
+  private String query;
 
 
   public Integer getId() {
@@ -54,6 +55,14 @@ public class Address {
     this.longitude = longitude;
   }
 
+  public String getQuery() {
+    return query;
+  }
+
+  public void setQuery(final String query) {
+    this.query = query;
+  }
+
   @Override
   @SuppressWarnings("PMD.ControlStatementBraces")
   public boolean equals(final Object o) {
@@ -67,12 +76,13 @@ public class Address {
     return /*id.equals(address1.id)  && */
       address.equals(address1.address)
       && latitude.equals(address1.latitude)
-      && longitude.equals(address1.longitude);
+      && longitude.equals(address1.longitude)
+        && query.equals(address1.query);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, address, latitude, longitude);
+    return Objects.hash(id, address, latitude, longitude, query);
   }
 
   @Override
@@ -83,14 +93,18 @@ public class Address {
       ", address='" + address + '\'' +
       ", latitude=" + latitude +
       ", longitude=" + longitude +
+      ", query=" + query +
+
       '}';
   }
 
-  public static Address of(final NominatimPlace place) {
+  public static Address of(final NominatimPlace place, final String query) {
     final Address result = new Address();
     result.setAddress(place.displayName());
     result.setLatitude(place.latitude());
     result.setLongitude(place.longitude());
+    result.setQuery(query);
     return result;
   }
+
 }

@@ -26,8 +26,8 @@ public interface NominatimClient {
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/reverse", produces = "application/json")
-    NominatimPlace reverse(@RequestParam("lat") String query,
-                           @RequestParam("lon") String query1,
+    NominatimPlace reverse(@RequestParam("lat") String lat,
+                           @RequestParam("lon") String lon,
                            @RequestParam("format") String format);
     @SuppressWarnings({"JavadocStyle", "OverloadMethodsDeclarationOrder", "InvalidJavadocPosition", "CommentsIndentation", "LineLength"})
 

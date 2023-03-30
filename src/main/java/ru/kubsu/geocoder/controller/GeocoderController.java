@@ -32,9 +32,9 @@ public class GeocoderController {
     }
 
 
-    @GetMapping(value = "/status", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Address> status(@RequestParam final String address) {
-        return addressService.search(address)
+    @GetMapping(value = "/search", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Address> search(@RequestParam final String query) {
+        return addressService.search(query)
           .map(nominatimPlace -> ResponseEntity
         .status(HttpStatus.OK)
         .body(nominatimPlace)).orElseGet(() -> ResponseEntity

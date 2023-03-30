@@ -47,10 +47,12 @@ class GeocoderControllerTest {
 
   @Test
   void searchWhenNominatimNotResponse() {
- when (nominatimClient.search(anyString())).thenReturn(Optional.empty());
+    final String query = "кубгу";
+
+    when (nominatimClient.search(anyString())).thenReturn(Optional.empty());
 
     ResponseEntity<Address> response = testRestTemplate.
-      getForEntity("http://localhost:" + port + "/geocoder/status?address=кубгу",
+      getForEntity("http://localhost:" + port + "/geocoder/status?query=" + query,
         Address.class);
 
 
@@ -62,13 +64,14 @@ class GeocoderControllerTest {
   }
   @Test
   void search() {
-    final  Address testAddress = buildTestAddress();
+    final String query = "кубгу";
+    final  Address testAddress = buildTestAddress(query);
     when (nominatimClient.search(anyString()))
       .thenReturn(Optional.of(buildTestPlace()));
 
     ResponseEntity<Address> response = testRestTemplate.
       getForEntity(
-        "http://localhost:" + port + "/geocoder/status?address=кубгу",
+        "http://localhost:" + port + "/geocoder/status?query=" + query,
         Address.class);
 
     assertEquals(HttpStatus.OK,response.getStatusCode());
@@ -88,8 +91,8 @@ class GeocoderControllerTest {
     return new NominatimPlace(45.02036085,39.9292392390293029302,"кубгу","universty");
   }
 
-  private static Address buildTestAddress(){
-    return Address.of(buildTestPlace());
+  private static Address buildTestAddress(final String  query){
+    return Address.of(buildTestPlace(), query);
   }
 
 }
